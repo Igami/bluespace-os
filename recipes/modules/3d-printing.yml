@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+
+modules:
+    - type: default-flatpaks
+      configurations:
+        - notify: true
+          scope: system
+          install:
+            - com.bambulab.BambuStudio  # Bambu Studio
+            - io.mango3d.LycheeSlicer   # Lychee Slicer
+            - net.meshlab.MeshLab       # MeshLab
+            - com.prusa3d.PrusaSlicer   # PrusaSlicer
+            - com.ultimaker.cura        # UltiMaker Cura
+
+    - type: dnf
+      install:
+        packages:
+          - printrun                    # Printrun
+
+    - type: script
+      scripts:
+        - install-orcaslicer-flatpak.sh # OrcaSlicer
