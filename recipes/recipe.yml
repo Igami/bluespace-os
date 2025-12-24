@@ -42,6 +42,7 @@ modules:
       - scope: user # Also add Flathub user repo, but no user packages
 
   - from-file: modules/3d-printing.yml
+  - from-file: modules/modeling.yml
   - from-file: modules/office.yml
   - from-file: modules/web-browser.yml
 
