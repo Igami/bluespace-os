@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+
+modules:
+    - type: default-flatpaks
+      configurations:
+        - scope: system
+          notify: false
+          install:
+            - com.collaboraoffice.Office            # Collabora Office
+            - org.flameshot.Flameshot               # Flameshot
+            - org.libreoffice.LibreOffice           # LibreOffice
+            - com.logseq.Logseq                     # Logseq
+            - com.nextcloud.desktopclient.nextcloud # Nextcloud Desktop Client
+            - md.obsidian.Obsidian                  # Obsidian
+            - org.onlyoffice.desktopeditors         # ONLYOFFICE Desktop Editors
+            - net.scribus.Scribus                   # Scribus
+            - com.github.xournalpp.xournalpp        # Xournal++
+            - org.zotero.Zotero                     # Zotero
