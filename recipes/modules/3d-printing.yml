@@ -4,8 +4,8 @@
 modules:
     - type: default-flatpaks
       configurations:
-        - notify: true
-          scope: system
+        - scope: system
+          notify: false
           install:
             - com.bambulab.BambuStudio  # Bambu Studio
             - io.mango3d.LycheeSlicer   # Lychee Slicer
@@ -17,7 +17,3 @@ modules:
       install:
         packages:
           - printrun                    # Printrun
-
-    - type: script
-      scripts:
-        - install-orcaslicer-flatpak.sh # OrcaSlicer
