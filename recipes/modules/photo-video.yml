@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+
+modules:
+    - type: default-flatpaks
+      configurations:
+        - scope: system
+          notify: false
+          install:
+          - org.darktable.Darktable # Darktable
+          - org.gimp.GIMP           # GIMP
+          - com.obsproject.Studio   # OBS Studio
+          - org.openshot.OpenShot   # OpenShot
+          - fm.reaper.Reaper        # Reaper
+          - org.shotcut.Shotcut     # Shotcut
+          - org.videolan.VLC        # VLC
