@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+#
+# TUXEDO Drivers Module
+#
+# Adds TUXEDO Computers repository and installs tuxedo-control-center
+# (which automatically includes tuxedo-drivers as a dependency).
+#
+# Repository: https://rpm.tuxedocomputers.com/fedora/
+# Documentation: https://www.tuxedocomputers.com/en/Infos/Help-Support/Instructions/Add-TUXEDO-Computers-software-package-sources.tuxedo
+
+modules:
+  - type: files
+    files:
+      - source: tuxedo/etc
+        destination: /etc
+
+  - type: script
+    scripts:
+      - tuxedo-driver-build.sh
