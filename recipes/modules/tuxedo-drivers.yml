@@ -12,8 +12,8 @@
 modules:
   - type: files
     files:
-      - source: tuxedo/etc
-        destination: /etc
+      - source: tuxedo
+        destination: /
 
   - type: script
     scripts:

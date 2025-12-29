@@ -5,16 +5,14 @@ set -ouex pipefail
 RELEASE="$(rpm -E %fedora)"
 
 ### Install packages
+rpm-ostree install rpm-build rpmdevtools kmodtool
 
-#Exec perms for symlink script
+# Exec perms for symlink script
 chmod +x /usr/bin/fixtuxedo
-#And autorun
+# And autorun
 systemctl enable /etc/systemd/system/fixtuxedo.service
 
-KERNEL="$(rpm -q kernel --queryformat '%{VERSION}')"
-echo "Kernel: ${KERNEL}"
-
-rpm-ostree install "kernel-devel-$KERNEL"
+# Build and install tuxedo drivers
 
 export HOME=/tmp
 
@@ -31,15 +29,16 @@ cd ..
 # Extract the Version value from the spec file
 export TD_VERSION=$(cat tuxedo-drivers-kmod/tuxedo-drivers-kmod-common.spec | grep -E '^Version:' | awk '{print $2}')
 export KERNEL_VERSION="$(rpm -q kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
+export FEDORA=42
 
 echo "Kernel version: ${KERNEL_VERSION}"
 echo "Tuxedo version: ${TD_VERSION}"
 
-rpm-ostree install ~/rpmbuild/RPMS/x86_64/akmod-tuxedo-drivers-$TD_VERSION-1.fc42.x86_64.rpm ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-$TD_VERSION-1.fc42.x86_64.rpm ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-common-$TD_VERSION-1.fc42.x86_64.rpm ~/rpmbuild/RPMS/x86_64/kmod-tuxedo-drivers-$TD_VERSION-1.fc42.x86_64.rpm
+rpm-ostree install ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-$TD_VERSION-1.fc$FEDORA.x86_64.rpm install ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-common-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/akmod-tuxedo-drivers-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/kmod-tuxedo-drivers-$TD_VERSION-1.fc$FEDORA.x86_64.rpm
 
 akmods --force --kernels "${KERNEL_VERSION}" --kmod "tuxedo-drivers-kmod"
 
-#Hacky workaround to make TCC install elsewhere
+# Hacky workaround to make TCC install elsewhere
 mkdir -p /usr/share
 rm /opt
 ln -s /usr/share /opt
