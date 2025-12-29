@@ -34,7 +34,7 @@ export FEDORA=42
 echo "Kernel version: ${KERNEL_VERSION}"
 echo "Tuxedo version: ${TD_VERSION}"
 
-rpm-ostree install ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-$TD_VERSION-1.fc$FEDORA.x86_64.rpm install ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-common-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/akmod-tuxedo-drivers-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/kmod-tuxedo-drivers-$TD_VERSION-1.fc$FEDORA.x86_64.rpm
+rpm-ostree install ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-common-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/akmod-tuxedo-drivers-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/kmod-tuxedo-drivers-$TD_VERSION-1.fc$FEDORA.x86_64.rpm
 
 akmods --force --kernels "${KERNEL_VERSION}" --kmod "tuxedo-drivers-kmod"
 
