@@ -15,6 +15,7 @@ modules:
   - from-file: modules/tuxedo-drivers.yml
 
   - from-file: modules/3d-printing.yml
+  - from-file: modules/audio.yml
   - from-file: modules/modeling.yml
   - from-file: modules/office.yml
   - from-file: modules/photo-video.yml
