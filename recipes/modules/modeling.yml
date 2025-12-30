@@ -7,13 +7,13 @@ modules:
         - scope: system
           notify: false
           install:
-          - org.blender.Blender           # Blender
-          - org.freecad.FreeCAD           # FreeCAD
-          - org.inkscape.Inkscape         # Inkscape
-          - org.kicad.KiCad               # KiCad
-          - org.leocad.LeoCAD             # LeoCAD
-          - io.github.trevorsandy.LPub3D  # LPub3D
-          - org.librecad.librecad         # LibreCAD
-          - org.openscad.OpenSCAD         # OpenSCAD
-          - com.solvespace.SolveSpace     # SolveSpace
-          - com.sweethome3d.Sweethome3d   # Sweet Home 3D
+            - org.blender.Blender           # Blender
+            - org.freecad.FreeCAD           # FreeCAD
+            - org.inkscape.Inkscape         # Inkscape
+            - org.kicad.KiCad               # KiCad
+            - org.leocad.LeoCAD             # LeoCAD
+            - io.github.trevorsandy.LPub3D  # LPub3D
+            - org.librecad.librecad         # LibreCAD
+            - org.openscad.OpenSCAD         # OpenSCAD
+            - com.solvespace.SolveSpace     # SolveSpace
+            - com.sweethome3d.Sweethome3d   # Sweet Home 3D
