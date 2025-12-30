@@ -9,3 +9,11 @@ modules:
           install:
             - cc.arduino.IDE2                       # Arduino IDE v2
             - org.octave.Octave                     # GNU Octave
+
+    - type: dnf
+      repos:
+        copr:
+          - iucar/rstudio
+      install:
+        packages:
+          - rstudio-desktop                         # RStudio Desktop
