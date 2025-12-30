@@ -43,6 +43,7 @@ modules:
           - restic                            # restic
           - ripgrep                           # ripgrep
           - screen                            # screen
+          - syncthing                         # syncthing
           - tmux                              # tmux
           - yq                                # yq
           - zellij                            # zellij
