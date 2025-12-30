@@ -7,13 +7,19 @@ modules:
         - scope: system
           notify: false
           install:
+            - org.gnome.Calculator                  # Calculator
+            - org.gnome.Snapshot                    # Camera
             - com.collaboraoffice.Office            # Collabora Office
+            - org.gnome.SimpleScan                  # Document Scanner
+            - org.gnome.Papers                      # Document Viewer
             - org.flameshot.Flameshot               # Flameshot
+            - org.gnome.Loupe                       # Image Viewer
             - org.libreoffice.LibreOffice           # LibreOffice
             - com.logseq.Logseq                     # Logseq
             - com.nextcloud.desktopclient.nextcloud # Nextcloud Desktop Client
             - md.obsidian.Obsidian                  # Obsidian
             - org.onlyoffice.desktopeditors         # ONLYOFFICE Desktop Editors
             - net.scribus.Scribus                   # Scribus
+            - org.gnome.TextEditor                  # Text Editor
             - com.github.xournalpp.xournalpp        # Xournal++
             - org.zotero.Zotero                     # Zotero
