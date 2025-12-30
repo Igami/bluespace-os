@@ -24,6 +24,7 @@ modules:
   - from-file: modules/photo-video.yml
   - from-file: modules/programming.yml
   - from-file: modules/tools.yml
+  - from-file: modules/virtualization.yml
   - from-file: modules/web-browser.yml
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
