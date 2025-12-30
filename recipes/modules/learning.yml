@@ -8,4 +8,3 @@ modules:
           notify: false
           install:
             - net.ankiweb.Anki          # Anki
-            - com.gitlab.tipp10.tipp10  # tipp10
