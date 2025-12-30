@@ -18,6 +18,7 @@ modules:
   - from-file: modules/audio.yml
   - from-file: modules/modeling.yml
   - from-file: modules/office.yml
+  - from-file: modules/password.yml
   - from-file: modules/photo-video.yml
   - from-file: modules/tools.yml
   - from-file: modules/web-browser.yml
