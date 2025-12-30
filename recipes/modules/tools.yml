@@ -8,6 +8,47 @@ modules:
           notify: false
           install:
             - com.github.qarmin.czkawka       # Czkawka
+            - org.gnome.baobab                # Disk Usage Analyzer
+            - org.fedoraproject.MediaWriter   # Fedora Media Writer
+            - com.github.tchx84.Flatseal      # Flatseal
+            - org.gnome.Logs                  # Logs
             - org.remmina.Remmina             # Remmina
             - com.transmissionbt.Transmission # Transmission
             - org.gnome.DejaDup               # Déjà Dup Datensicherungen
+
+    - type: dnf
+      repos:
+        copr:
+          - atim/lazygit
+          - jdxcode/mise
+          - varlad/zellij
+      install:
+        packages:
+          - adb                               # adb
+          - ansible                           # ansible
+          - btop                              # btop
+          - croc                              # croc
+          - entr                              # entr
+          - fastboot                          # fastboot
+          - fd-find                           # fd
+          - fzf                               # fzf
+          - gparted                           # GParted
+          - jq                                # jq
+          - lazygit                           # lazygit
+          - mise                              # mise
+          - pandoc-cli                        # pandoc
+          - pdfgrep                           # pdfgrep
+          - rclone                            # rclone
+          - renameutils                       # renameutils
+          - restic                            # restic
+          - ripgrep                           # ripgrep
+          - screen                            # screen
+          - tmux                              # tmux
+          - yq                                # yq
+          - zellij                            # zellij
+
+    - type: chezmoi
+      repository: "https://github.com/Igami/bluespace-dotfiles"
+      all-users: true
+      run-every: 30m
+      file-conflict-policy: skip
