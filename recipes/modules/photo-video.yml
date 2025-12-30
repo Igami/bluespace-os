@@ -7,11 +7,10 @@ modules:
         - scope: system
           notify: false
           install:
-          - org.darktable.Darktable # Darktable
-          - io.freetubeapp.FreeTube # FreeTube
-          - org.gimp.GIMP           # GIMP
-          - com.obsproject.Studio   # OBS Studio
-          - org.openshot.OpenShot   # OpenShot
-          - fm.reaper.Reaper        # Reaper
-          - org.shotcut.Shotcut     # Shotcut
-          - org.videolan.VLC        # VLC
+            - org.darktable.Darktable # Darktable
+            - io.freetubeapp.FreeTube # FreeTube
+            - org.gimp.GIMP           # GIMP
+            - com.obsproject.Studio   # OBS Studio
+            - org.openshot.OpenShot   # OpenShot
+            - org.shotcut.Shotcut     # Shotcut
+            - org.videolan.VLC        # VLC
