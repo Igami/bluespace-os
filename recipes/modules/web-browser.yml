@@ -2,13 +2,13 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
 
 modules:
-    - type: default-flatpaks
-      configurations:
-        - scope: system
-          notify: false
-          install:
-            - com.brave.Browser                   # Brave
-            - org.chromium.Chromium               # Chromium Web Browser
-            - org.mozilla.firefox                 # Firefox
-            - com.google.Chrome                   # Google Chrome
-            - org.torproject.torbrowser-launcher  # Tor Browser Launcher
+  - type: default-flatpaks
+    configurations:
+      - scope: system
+        notify: false
+        install:
+          - com.brave.Browser                     # Brave
+          - org.chromium.Chromium                 # Chromium Web Browser
+          - org.mozilla.firefox                   # Firefox
+          - com.google.Chrome                     # Google Chrome
+          - org.torproject.torbrowser-launcher    # Tor Browser Launcher

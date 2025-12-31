@@ -7,16 +7,16 @@ modules:
       - scope: system
         notify: false
         install:
-          - com.bambulab.BambuStudio  # Bambu Studio
-          - io.mango3d.LycheeSlicer   # Lychee Slicer
-          - net.meshlab.MeshLab       # MeshLab
-          - com.prusa3d.PrusaSlicer   # PrusaSlicer
-          - com.ultimaker.cura        # UltiMaker Cura
+          - com.bambulab.BambuStudio              # Bambu Studio
+          - io.mango3d.LycheeSlicer               # Lychee Slicer
+          - net.meshlab.MeshLab                   # MeshLab
+          - com.prusa3d.PrusaSlicer               # PrusaSlicer
+          - com.ultimaker.cura                    # UltiMaker Cura
 
   - type: dnf
     install:
       packages:
-        - printrun                    # Printrun
+      - printrun                                  # Printrun
 
   - type: files
     files:
@@ -26,4 +26,4 @@ modules:
   - type: systemd
     system:
       enabled:
-        - install-orcaslicer.service
+        - install-orcaslicer.service              # orcaslicer

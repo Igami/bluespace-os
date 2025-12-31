@@ -4,4 +4,4 @@
 modules:
   - type: script
     scripts:
-      - install-lightburn.sh
+      - install-lightburn.sh                      # LightBurn

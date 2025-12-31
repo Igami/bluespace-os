@@ -2,16 +2,16 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
 
 modules:
-    - type: default-flatpaks
-      configurations:
-        - scope: system
-          notify: false
-          install:
-            - io.github.dvlv.boxbuddyrs     # BoxBuddy
-            - org.gnome.Boxes               # Boxes
-            - org.virt_manager.virt-manager # Virtual Machine Manager
+  - type: default-flatpaks
+    configurations:
+      - scope: system
+        notify: false
+        install:
+          - io.github.dvlv.boxbuddyrs             # BoxBuddy
+          - org.gnome.Boxes                       # Boxes
+          - org.virt_manager.virt-manager         # Virtual Machine Manager
 
-    - type: dnf
-      install:
-        packages:
-          - qemu                            # qemu
+  - type: dnf
+    install:
+      packages:
+        - qemu                                    # qemu
