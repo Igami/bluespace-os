@@ -28,4 +28,13 @@ modules:
   - from-file: modules/virtualization.yml
   - from-file: modules/web-browser.yml
 
+  - type: os-release
+    properties:
+      NAME: bluespace-os
+      PRETTY_NAME: bluespace-os
+      ID: bluespace-os
+      DEFAULT_HOSTNAME: blueplanet
+      HOME_URL: https://github.com/Igami/bluespace-os
+      DOCUMENTATION_URL: https://blue-build.org/reference/recipe/
+
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
