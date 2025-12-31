@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+# Tell this script to exit if there are any errors.
+set -oue pipefail
+
+echo "Checking OrcaSlicer installation and updates..."
+
+# Define variables
+REPO="OrcaSlicer/OrcaSlicer"
+ARCH="x86_64"
+TEMP_DIR="/tmp/orcaslicer-install"
+VERSION_FILE="/var/lib/flatpak/.orcaslicer-version"
+
+# Get the latest release version
+echo "Fetching latest OrcaSlicer release info..."
+LATEST_VERSION=$(curl -s "https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
+
+if [ -z "$LATEST_VERSION" ]; then
+    echo "Failed to fetch latest version, skipping..."
+    exit 0
+fi
+
+echo "Latest version available: ${LATEST_VERSION}"
+
+# Check installed version
+INSTALLED_VERSION=""
+if [ -f "$VERSION_FILE" ]; then
+    INSTALLED_VERSION=$(cat "$VERSION_FILE")
+    echo "Installed version: ${INSTALLED_VERSION}"
+fi
+
+# Check if update is needed
+if [ "$INSTALLED_VERSION" = "$LATEST_VERSION" ]; then
+    echo "OrcaSlicer is already up to date (${LATEST_VERSION})"
+    exit 0
+fi
+
+# Install or update OrcaSlicer
+if [ -z "$INSTALLED_VERSION" ]; then
+    echo "Installing OrcaSlicer ${LATEST_VERSION}..."
+else
+    echo "Updating OrcaSlicer from ${INSTALLED_VERSION} to ${LATEST_VERSION}..."
+fi
+
+# Create temporary directory
+mkdir -p "$TEMP_DIR"
+cd "$TEMP_DIR"
+
+# Build download URL
+DOWNLOAD_URL="https://github.com/${REPO}/releases/download/${LATEST_VERSION}/OrcaSlicer-Linux-flatpak_${LATEST_VERSION}_${ARCH}.flatpak"
+echo "Download URL: ${DOWNLOAD_URL}"
+
+# Download the flatpak
+echo "Downloading OrcaSlicer Flatpak..."
+if ! curl -L -o "orcaslicer.flatpak" "$DOWNLOAD_URL"; then
+    echo "Download failed, skipping..."
+    rm -rf "$TEMP_DIR"
+    exit 0
+fi
+
+# Install/update the flatpak system-wide
+echo "Installing OrcaSlicer Flatpak..."
+if flatpak install --system -y --noninteractive --bundle "orcaslicer.flatpak"; then
+    # Save installed version
+    mkdir -p /var/lib/flatpak
+    echo "$LATEST_VERSION" > "$VERSION_FILE"
+    echo "OrcaSlicer ${LATEST_VERSION} installed successfully!"
+else
+    echo "Installation failed, keeping current version..."
+fi
+
+# Cleanup
+echo "Cleaning up temporary files..."
+cd /
+rm -rf "$TEMP_DIR"

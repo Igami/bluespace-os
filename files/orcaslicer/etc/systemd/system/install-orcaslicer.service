@@ -1,0 +1,12 @@
+[Unit]
+Description=Install and update OrcaSlicer Flatpak
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/install-orcaslicer-firstboot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
