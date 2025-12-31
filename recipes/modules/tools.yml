@@ -33,6 +33,7 @@ modules:
           - fd-find                           # fd
           - fzf                               # fzf
           - gparted                           # GParted
+          - grsync                            # grsync
           - jq                                # jq
           - lazygit                           # lazygit
           - mise                              # mise
@@ -42,6 +43,7 @@ modules:
           - renameutils                       # renameutils
           - restic                            # restic
           - ripgrep                           # ripgrep
+          - rsync                             # rsync
           - screen                            # screen
           - syncthing                         # syncthing
           - tmux                              # tmux

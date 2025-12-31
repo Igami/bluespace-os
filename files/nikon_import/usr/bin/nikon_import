@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cd "$(lsblk /dev/nikon -n -o MOUNTPOINT)"
+mkdir -p /home/maker/Öffentlich/Bilder/neue\ Bilder
+rsync -r -t -p -o -g -v --progress --ignore-existing -s --exclude *.NEF* --exclude *.DAT* ./DCIM/100NCZ_6/ /home/maker/Öffentlich/Bilder/neue\ Bilder
+mkdir -p ./DCIM/999NCZ_6/
+mv ./DCIM/100NCZ_6/* ./DCIM/999NCZ_6/
+mv ./DCIM/999NCZ_6/NC_FLLST.DAT ./DCIM/100NCZ_6/
+cd ~
+umount "$(lsblk /dev/nikon -n -o MOUNTPOINT)"
