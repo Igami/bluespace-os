@@ -14,3 +14,8 @@ modules:
           - org.openshot.OpenShot                 # OpenShot
           - org.shotcut.Shotcut                   # Shotcut
           - org.videolan.VLC                      # VLC
+
+  - type: files                                   # nikon_import
+    files:
+      - source: nikon_import
+        destination: /

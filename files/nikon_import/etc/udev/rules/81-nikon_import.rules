@@ -1,1 +1,1 @@
-KERNEL=="sd?1", SUBSYSTEMS=="usb", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="0c55", ATTRS{serial}=="0118E507011B0A302400000031304448314B5230", SYMLINK+="nikon", RUN+="/usr/local/bin/nikon_import"
+KERNEL=="sd?1", SUBSYSTEMS=="usb", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="0c55", ATTRS{serial}=="0118E507011B0A302400000031304448314B5230", SYMLINK+="nikon", RUN+="/usr/bin/nikon_import"
