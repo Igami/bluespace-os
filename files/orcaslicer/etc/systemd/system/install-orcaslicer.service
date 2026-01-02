@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/install-orcaslicer-firstboot
+ExecStart=/usr/bin/install-orcaslicer-at-boot
 
 [Install]
 WantedBy=multi-user.target
