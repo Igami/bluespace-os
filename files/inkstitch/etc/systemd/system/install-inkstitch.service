@@ -1,0 +1,11 @@
+[Unit]
+Description=Install and update Ink/Stitch for all users
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/install-inkstitch-at-boot
+
+[Install]
+WantedBy=multi-user.target

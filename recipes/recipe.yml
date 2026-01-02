@@ -24,6 +24,7 @@ modules:
   - from-file: modules/password.yml
   - from-file: modules/photo-video.yml
   - from-file: modules/programming.yml
+  - from-file: modules/sewing.yml
   - from-file: modules/tools.yml
   - from-file: modules/virtualization.yml
   - from-file: modules/web-browser.yml

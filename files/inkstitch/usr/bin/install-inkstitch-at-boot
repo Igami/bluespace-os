@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+
+# Tell this script to exit if there are any errors.
+set -oue pipefail
+
+echo "Checking Ink/Stitch installation and updates for all users..."
+
+# Define variables
+REPO="inkstitch/inkstitch"
+ARCHIVE_TYPE="linux-x86_64.tar.xz"
+TEMP_DIR="/tmp/inkstitch-install-$$"
+SYSTEM_VERSION_FILE="/var/lib/inkstitch-version"
+
+# Get the latest release version
+echo "Fetching latest Ink/Stitch release info..."
+LATEST_VERSION=$(curl -s "https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
+
+if [ -z "$LATEST_VERSION" ]; then
+    echo "Failed to fetch latest version, skipping..."
+    exit 0
+fi
+
+echo "Latest version available: ${LATEST_VERSION}"
+
+# Check system-wide installed version
+INSTALLED_VERSION=""
+if [ -f "$SYSTEM_VERSION_FILE" ]; then
+    INSTALLED_VERSION=$(cat "$SYSTEM_VERSION_FILE")
+    echo "System-wide installed version: ${INSTALLED_VERSION}"
+fi
+
+# Check if update is needed
+if [ "$INSTALLED_VERSION" = "$LATEST_VERSION" ]; then
+    echo "Ink/Stitch is already up to date (${LATEST_VERSION})"
+    exit 0
+fi
+
+# Install or update Ink/Stitch
+if [ -z "$INSTALLED_VERSION" ]; then
+    echo "Installing Ink/Stitch ${LATEST_VERSION}..."
+else
+    echo "Updating Ink/Stitch from ${INSTALLED_VERSION} to ${LATEST_VERSION}..."
+fi
+
+# Create temporary directory
+mkdir -p "$TEMP_DIR"
+cd "$TEMP_DIR"
+
+# Build download URL
+DOWNLOAD_URL="https://github.com/${REPO}/releases/download/${LATEST_VERSION}/inkstitch-${LATEST_VERSION}-${ARCHIVE_TYPE}"
+echo "Download URL: ${DOWNLOAD_URL}"
+
+# Download the archive
+echo "Downloading Ink/Stitch archive..."
+if ! curl -L -o "inkstitch.tar.xz" "$DOWNLOAD_URL"; then
+    echo "Download failed, skipping..."
+    rm -rf "$TEMP_DIR"
+    exit 0
+fi
+
+# Install for all existing users
+echo "Installing Ink/Stitch extension for all users..."
+for USER_HOME in /home/* /var/home/*; do
+    if [ -d "$USER_HOME" ] && [ "$USER_HOME" != "/home/*" ] && [ "$USER_HOME" != "/var/home/*" ]; then
+        USERNAME=$(basename "$USER_HOME")
+        USER_VERSION_FILE="$USER_HOME/.local/share/inkstitch-version"
+        EXTENSIONS_DIR="$USER_HOME/.var/app/org.inkscape.Inkscape/config/inkscape/extensions"
+
+        # Skip if user already has this version
+        if [ -f "$USER_VERSION_FILE" ] && [ "$(cat "$USER_VERSION_FILE")" = "$LATEST_VERSION" ]; then
+            echo "User $USERNAME already has Ink/Stitch ${LATEST_VERSION}, skipping..."
+            continue
+        fi
+
+        echo "Installing for user: $USERNAME"
+
+        # Create extensions directory if it doesn't exist
+        if [ ! -d "$EXTENSIONS_DIR" ]; then
+            runuser -u "$USERNAME" -- mkdir -p "$EXTENSIONS_DIR"
+        fi
+
+        # Extract archive to extensions directory
+        runuser -u "$USERNAME" -- tar -xf "inkstitch.tar.xz" -C "$EXTENSIONS_DIR"
+
+        # Set proper permissions
+        chown -R "$USERNAME:$USERNAME" "$EXTENSIONS_DIR/inkstitch"
+        chmod -R u+rwX "$EXTENSIONS_DIR/inkstitch"
+
+        # Save user-specific version
+        runuser -u "$USERNAME" -- mkdir -p "$USER_HOME/.local/share"
+        echo "$LATEST_VERSION" | runuser -u "$USERNAME" -- tee "$USER_VERSION_FILE" > /dev/null
+
+        echo "Installed Ink/Stitch ${LATEST_VERSION} for user $USERNAME"
+    fi
+done
+
+# Save system-wide version
+echo "$LATEST_VERSION" > "$SYSTEM_VERSION_FILE"
+echo "Ink/Stitch ${LATEST_VERSION} installation complete!"
+
+# Cleanup
+echo "Cleaning up temporary files..."
+cd /
+rm -rf "$TEMP_DIR"
