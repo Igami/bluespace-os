@@ -10,17 +10,28 @@ REPO="inkstitch/inkstitch"
 ARCHIVE_TYPE="linux-x86_64.tar.xz"
 TEMP_DIR="/tmp/inkstitch-install-$$"
 SYSTEM_VERSION_FILE="/var/lib/inkstitch-version"
+API_URL="https://api.github.com/repos/$REPO/releases/latest"
 
-# Get the latest release version
+# Get the latest release info
 echo "Fetching latest Ink/Stitch release info..."
-LATEST_VERSION=$(curl -s "https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
+RELEASE_JSON=$(curl -s "$API_URL")
 
-if [ -z "$LATEST_VERSION" ]; then
-    echo "Failed to fetch latest version, skipping..."
+if [ -z "$RELEASE_JSON" ]; then
+    echo "Failed to fetch release info, skipping..."
+    exit 0
+fi
+
+# Extract version and download URL from assets
+LATEST_VERSION=$(echo "$RELEASE_JSON" | jq -r '.tag_name')
+DOWNLOAD_URL=$(echo "$RELEASE_JSON" | jq -r ".assets[] | select(.name | contains(\"${ARCHIVE_TYPE}\")) | .browser_download_url")
+
+if [ -z "$LATEST_VERSION" ] || [ -z "$DOWNLOAD_URL" ]; then
+    echo "Failed to parse release info, skipping..."
     exit 0
 fi
 
 echo "Latest version available: ${LATEST_VERSION}"
+echo "Download URL: ${DOWNLOAD_URL}"
 
 # Check system-wide installed version
 INSTALLED_VERSION=""
@@ -45,10 +56,6 @@ fi
 # Create temporary directory
 mkdir -p "$TEMP_DIR"
 cd "$TEMP_DIR"
-
-# Build download URL
-DOWNLOAD_URL="https://github.com/${REPO}/releases/download/${LATEST_VERSION}/inkstitch-${LATEST_VERSION}-${ARCHIVE_TYPE}"
-echo "Download URL: ${DOWNLOAD_URL}"
 
 # Download the archive
 echo "Downloading Ink/Stitch archive..."
