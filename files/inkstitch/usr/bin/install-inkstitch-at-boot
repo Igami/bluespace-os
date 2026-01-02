@@ -63,6 +63,12 @@ echo "Installing Ink/Stitch extension for all users..."
 for USER_HOME in /home/* /var/home/*; do
     if [ -d "$USER_HOME" ] && [ "$USER_HOME" != "/home/*" ] && [ "$USER_HOME" != "/var/home/*" ]; then
         USERNAME=$(basename "$USER_HOME")
+
+        # Skip linuxbrew directory (used by Homebrew, not a real user)
+        if [ "$USERNAME" = "linuxbrew" ]; then
+            echo "Skipping linuxbrew directory (Homebrew system directory)"
+            continue
+        fi
         USER_VERSION_FILE="$USER_HOME/.local/share/inkstitch-version"
         EXTENSIONS_DIR="$USER_HOME/.var/app/org.inkscape.Inkscape/config/inkscape/extensions"
 
