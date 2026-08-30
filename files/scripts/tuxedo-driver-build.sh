@@ -29,14 +29,18 @@ cd ..
 # Extract the Version value from the spec file
 export TD_VERSION=$(cat tuxedo-drivers-kmod/tuxedo-drivers-kmod-common.spec | grep -E '^Version:' | awk '{print $2}')
 export KERNEL_VERSION="$(rpm -q kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
-export FEDORA=42
+export FEDORA=44
 
 echo "Kernel version: ${KERNEL_VERSION}"
 echo "Tuxedo version: ${TD_VERSION}"
 
-rpm-ostree install ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-common-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/akmod-tuxedo-drivers-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/kmod-tuxedo-drivers-$TD_VERSION-1.fc$FEDORA.x86_64.rpm
-
-akmods --force --kernels "${KERNEL_VERSION}" --kmod "tuxedo-drivers-kmod"
+# Install the base/common packages plus the kmod pre-built for the exact
+# kernel baked into this image. The akmod-* package is intentionally skipped:
+# its %post scriptlet tries to build the module immediately via akmods, which
+# now refuses to run as root (Fedora 44 regression, see
+# https://github.com/ublue-os/bazzite/issues/5106) and isn't needed anyway
+# since we already ship a matching precompiled module for this exact kernel.
+rpm-ostree install ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/tuxedo-drivers-kmod-common-$TD_VERSION-1.fc$FEDORA.x86_64.rpm ~/rpmbuild/RPMS/x86_64/kmod-tuxedo-drivers-$KERNEL_VERSION-$TD_VERSION-1.fc$FEDORA.x86_64.rpm
 
 # Hacky workaround to make TCC install elsewhere
 mkdir -p /usr/share
