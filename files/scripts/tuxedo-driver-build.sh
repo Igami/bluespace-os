@@ -22,14 +22,20 @@ rpmdev-setuptree
 
 git clone https://github.com/gladion136/tuxedo-drivers-kmod
 
+# Build for the kernel that will actually ship in this image, not the build
+# host's own kernel: build.sh defaults to `uname -r`, which is the container
+# build host's kernel (e.g. the Ubuntu GitHub Actions runner) and has no
+# matching kernel-devel inside this Fedora rootfs, so kmodtool would silently
+# skip compiling the module for it.
+export KERNEL_VERSION="$(rpm -q kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
+export FEDORA=44
+
 cd tuxedo-drivers-kmod/
-./build.sh
+./build.sh "${KERNEL_VERSION}"
 cd ..
 
 # Extract the Version value from the spec file
 export TD_VERSION=$(cat tuxedo-drivers-kmod/tuxedo-drivers-kmod-common.spec | grep -E '^Version:' | awk '{print $2}')
-export KERNEL_VERSION="$(rpm -q kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
-export FEDORA=44
 
 echo "Kernel version: ${KERNEL_VERSION}"
 echo "Tuxedo version: ${TD_VERSION}"
